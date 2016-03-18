@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private int questionID = 0;
     private Speech speech;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         speechBTN = (Button)findViewById(R.id.speech);
@@ -43,8 +43,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         logData = new ArrayList<LogData>();
-        //logData = LogData.readFromFile();
-        adapter = new LogAdapter(this, logData);
+        try {
+            logData = LogData.readFromFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }adapter = new LogAdapter(this, logData);
         log.setAdapter(adapter);
         //start text to speech
         speech = new Speech(this);

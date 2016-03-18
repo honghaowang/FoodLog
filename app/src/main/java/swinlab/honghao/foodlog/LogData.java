@@ -2,12 +2,6 @@ package swinlab.honghao.foodlog;
 
 import android.os.Environment;
 import android.util.Log;
-import android.util.Xml;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlSerializer;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -64,9 +58,11 @@ public class LogData {
 
         FileOutputStream outputStream = null;
         try{
-            outputStream = new FileOutputStream(file);
+            outputStream = new FileOutputStream(file, true);
             String msg = data.foodInfo + "\n" + data.timeStamp + "\n" + data.check + "\n";
             outputStream.write(msg.getBytes("UTF-8"));
+            outputStream.flush();
+            outputStream.close();
         } catch (FileNotFoundException e){
             e.printStackTrace();
             return;
@@ -74,15 +70,6 @@ public class LogData {
             e.printStackTrace();
         } catch (IOException e){
             e.printStackTrace();
-        } finally{
-            if(outputStream != null){
-                try{
-                    outputStream.flush();
-                    outputStream.close();
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
         }
     }
 }
